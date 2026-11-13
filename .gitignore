@@ -1,0 +1,9 @@
+node_modules
+
+# Assembled by `npm run ui:build` from the installed cfb-ui — regenerable, never committed.
+public
+
+# Holds a GitHub read:packages token. Keep it local; commit .npmrc.example instead.
+.npmrc
+
+*.tgz
