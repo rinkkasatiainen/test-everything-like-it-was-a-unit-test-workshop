@@ -1,0 +1,4 @@
+{
+  "timeout": 10000,
+  "comment": "10s because the integration and e2e tiers wait on real transports. The component tier is far faster than this ceiling — a nullable bus settles synchronously."
+}
