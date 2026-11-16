@@ -17,9 +17,19 @@ behind) → `createTrackerSpy`. An integration test watches a **real transport**
 frames off a socket) → `eventStream`. The send side, `emit`, is shared. Import from `src/dsl`:
 
 ```js
-import { eventStream, liveEventStream, emit, fromBroker, fromChannel, fromProducer, fromStore, fromRabbit, fromWebSocket } from '../../src/dsl'
+import {
+  eventStream,
+  liveEventStream,
+  emit,
+  fromBroker,
+  fromChannel,
+  fromProducer,
+  fromStore,
+  fromRabbit,
+  fromWebSocket
+} from './index'
 import { createTrackerSpy } from '@rinkkasatiainen/cfb-event-sourcing-testing'
-import { exactly } from '../../src/dsl/exactly.js'
+import { exactly } from './exactly.js'
 ```
 
 ## `createTrackerSpy(source)` — the component-tier spy

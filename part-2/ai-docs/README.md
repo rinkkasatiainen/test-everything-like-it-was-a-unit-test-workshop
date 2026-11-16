@@ -18,6 +18,8 @@ ai-docs/
     draw-the-box.md          # the Socratic ENTRY POINT: gate → draw box → classify → redirect → write
     nullables.md             # focused sub-lesson: nullables / spies / why no mocks
   explanation/               # WHY — the mental models
+    capabilities.md            # what a "capability" IS — the box you draw around (the capability map)
+    event-model.md             # what the system actually does — the box map; beats = the three flows
     which-test-is-this-box.md  # the hard part: classify the box (contract/resilience, breadth × fidelity)
     testing-levels.md          # the fidelity axis: component / integration / e2e
     where-to-cut-the-flow.md   # the breadth axis; the "component-integration" name trap
@@ -78,6 +80,10 @@ weld), integration (bus→bus, HTTP→bus, bus→WebSocket), contract (per capab
 resilience (silent drop, transient nack), and e2e. If a dry run finds a test the coach cannot lead a
 participant to build, that gap is a missing or thin doc — fix it here.
 
-> **Pending (separate task):** a `capability` explainer — what a "capability" *is* in the CodeFreeze
-> board — is not yet written. The whole corpus says "draw a box around a capability" but never
-> defines the term. Tracked to build on its own.
+> **The ground the box sits on.** Two explanation docs define the terms the whole corpus leans on:
+> [`explanation/capabilities.md`](explanation/capabilities.md) — what a "capability" *is* in the
+> CodeFreeze board (the capability map) — and [`explanation/event-model.md`](explanation/event-model.md)
+> — what the system actually does, drawn as beats, where each coloured transition is a candidate box
+> and the three beats are the three Part 2 flows. Start a participant here when "draw a box around a
+> capability" is still abstract. Source pictures live in `images/` (`capability-map-*.png`,
+> `event-model-*.png`).

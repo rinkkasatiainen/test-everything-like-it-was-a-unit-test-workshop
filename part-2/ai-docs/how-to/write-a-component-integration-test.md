@@ -27,7 +27,7 @@ import { commandWith } from '@rinkkasatiainen/cfb-session-proposal-contracts'
 import { createRelay } from '@rinkkasatiainen/cfb-event-sourcing-relay'
 import { createInMemoryEventStore, createTrackerSpy } from '@rinkkasatiainen/cfb-event-sourcing-testing'
 import { RabbitProducer } from '@rinkkasatiainen/cfb-event-sourcing-bus-rabbitmq'
-import { fromProducer } from '../../src/dsl'
+import { fromProducer } from './index'
 
 let store, producer, relay, propose, output
 before(() => {
@@ -36,8 +36,12 @@ before(() => {
   relay = createRelay({ store, producer })
   propose = proposeSession(store, { clock, userId: 'u-casey', correlationId: 'r-casey' })
 })
-beforeEach(() => { output = producer.trackChanges() }) // producer records { routingKey, event }
-afterEach(() => { output?.close() })
+beforeEach(() => {
+  output = producer.trackChanges()
+}) // producer records { routingKey, event }
+afterEach(() => {
+  output?.close()
+})
 ```
 
 Matchers here read a **producer** record `{ routingKey, event }`, not a store write record:

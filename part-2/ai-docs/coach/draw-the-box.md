@@ -45,13 +45,34 @@ flow. The three flows this workshop teaches:
 | bus → bus | Discovery reacts to `session-proposed`, emits `session-change-noted` |
 | bus → WebSocket | a board update is pushed to a connected client |
 
-If they name a whole feature or several capabilities at once, narrow them to one. The box has
-to be small enough to hold in one test.
+If "capability" or these flows feel abstract, ground them first: a capability is one slice of
+behaviour that owns its own fact and read model
+([`part-2/testing/ai-docs/explanation/capabilities.md`](../explanation/capabilities.md), the
+capability map), and each flow above is one **beat** of the system's event model, where every
+coloured transition is a box
+([`part-2/testing/ai-docs/explanation/event-model.md`](../explanation/event-model.md)). Trace the
+box off that model rather than inventing it.
 
-## 2. The four questions — Part 1, one box larger
+If they name a whole feature or several capabilities at once, **do not reject it as "too big"** —
+name back the capabilities you heard and frame the narrowing as *where to start*:
 
-Walk them through drawing the box. These are Steps 1–5 of Part 1, scaled from a class to a
-capability. Ask one at a time; let them answer before you name anything.
+> "That's a bit big for the **first** test — it's really a couple of capabilities. Could we split
+> it by capability and pick one to start with?"
+
+e.g. *"propose a session"* is one capability (HTTP → bus) and *"see it in the browser"* is another,
+further down the flow (bus → WebSocket). Let them choose which to box first. One capability is one
+box is one test, and we build the feature one box at a time — keep "first" in the language so the
+next box feels invited, not foreclosed.
+
+## 2. The four questions — the Sandi Metz model, one box larger
+
+This is **the Sandi Metz model** the participant already met in Part 1 — *choose a unit, imagine a
+box around it, look at the arrows in and the arrows out* — now scaled from a class to a capability.
+Name it as such: say "this is the same Sandi Metz heuristic from Part 1, one box larger," and if
+they want the refresher point them to
+[`part-1/how-to-test-anything/README.md`](../../../part-1/how-to-test-anything/README.md)
+("How to test any unit — The Sandi Metz model"). These are Steps 1–5 of Part 1. Ask one at a time;
+let them answer before you name anything.
 
 1. **Arrows in — what starts this?** An HTTP command? A fact off the bus? Is it a *command*
    (changes something) or a *query* (returns something)? → the incoming message, what the test

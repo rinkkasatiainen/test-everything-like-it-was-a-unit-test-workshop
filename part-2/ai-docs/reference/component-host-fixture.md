@@ -11,7 +11,7 @@ what a host actually does: subscribe the capability's reaction onto the consumer
 relay (store → producer). The test reads in the vocabulary of the ports it owns.
 
 ```js
-import { componentHost } from '../../src/component-host.js'
+import { componentHost } from './component-host.js'
 
 const store = createInMemoryEventStore()
 const consumer = RabbitConsumer.createNull({ consumerGroup: CAPABILITY })
@@ -22,7 +22,9 @@ try {
   await settle()                                        // the host's relay drains the outbox
   await createTrackerSpy(fromProducer(producer.trackChanges()))
     .ofChannel('session-change-noted').waitUntilFound(1)
-} finally { await close() }
+} finally {
+  await close()
+}
 ```
 
 ## Signature

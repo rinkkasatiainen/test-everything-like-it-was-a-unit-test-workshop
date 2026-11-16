@@ -57,7 +57,8 @@ nothing failed. Put both in the test — that contrast is the lesson.
 ## Transient failure — fail a few times, then succeed
 
 ```js
-import { succeedsOnAttempt } from '../../src/doubles/unreliable-producer.js'
+import { succeedsOnAttempt } from './unreliable-producer.js'
+
 const producer = succeedsOnAttempt(realProducer, { when: payloadHasWord('retry'), attempt: 5 })
 ```
 
