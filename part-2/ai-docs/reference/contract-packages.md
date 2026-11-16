@@ -2,8 +2,7 @@
 
 > AI-facing reference, self-contained. What each capability publishes as its contract, and what a
 > test imports. A contract test (and a tier test's fixtures) must read the **provider-owned**
-> artifact as a dependency — never a copy. Human version:
-> `part-2/testing/docs/reference/contract-packages.md`.
+> artifact as a dependency — never a copy.
 
 ## Scheduling — the worked example (exists, published)
 
@@ -14,7 +13,7 @@ Package: **`@rinkkasatiainen/cfb-session-scheduling-contracts`**. In `devDepende
 | `sessionScheduledFactSchema`, `sessionLengthSetFactSchema` | fact schemas (payload closed, metaData open) |
 | `scheduleSessionCommandSchema`, `setSessionLengthCommandSchema` | command schemas |
 | `buildSessionScheduledFactWith`, `buildSessionLengthSetFactWith` | fact builders |
-| `commandWith`, `setLengthCommandWith` | command builders |
+| `scheduleSessionCommandWith`, `setLengthCommandWith` | command builders (both nest their fields under `command.payload`) |
 | `WellKnown.SessionScheduled.CaseyTue`, `WellKnown.SessionLengthSet.CaseyNinety` | named instances (the `eql` pin) |
 | `registerSchemaMatcher`, `matching`, `containing`, `optional`, `exactly`, … | the chai-free matcher |
 

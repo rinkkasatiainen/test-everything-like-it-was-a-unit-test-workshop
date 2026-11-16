@@ -60,14 +60,14 @@ everywhere. That method is [`docs/explanation/anatomy-of-a-component-test.md`](d
 
 - **Learn** — [tutorial/your-first-component-test.md](docs/tutorial/your-first-component-test.md): write the HTTP→bus test from an empty file.
 - **Do** — how-to, one per tier: [component](docs/how-to/write-a-component-test.md) · [integration](docs/how-to/write-an-integration-test.md) · [e2e](docs/how-to/write-an-e2e-test.md) · [contract](docs/how-to/write-a-contract-test.md) · [inject a failure](docs/how-to/inject-a-failure.md).
-- **Look up** — reference: the [event-stream DSL](docs/reference/event-stream-dsl.md) · the [capability-host fixture](docs/reference/capability-host-fixture.md) · the [contract packages](docs/reference/contract-packages.md).
+- **Look up** — reference: the [event-stream DSL](docs/reference/event-stream-dsl.md) · the [port vocabulary](docs/reference/ports.md) · the [contract packages](docs/reference/contract-packages.md).
 - **Understand** — explanation: [the tiers, and why they exist](docs/explanation/testing-levels.md) · [where to cut the flow](docs/explanation/where-to-cut-the-flow.md) · [anatomy of a component test](docs/explanation/anatomy-of-a-component-test.md) · [nullables, spies and mocks](docs/explanation/nullables-and-spies.md) · [contract testing](docs/explanation/contract-testing.md).
 
 ## Status
 
 The **test lists are written; the bodies are not** — every `it` is pending (`todo`). That is the
 house order: a test list, then a design the author confirms, then the code. The design the bodies
-need — the `eventStream` DSL and the `componentHost` fixture — lives in `docs/reference/` and has
+need — the `eventStream` DSL and the port vocabulary — lives in `docs/reference/` and has
 **no implementation under `src/` yet**. Writing `src/` is the next step, once the reference is
 agreed.
 

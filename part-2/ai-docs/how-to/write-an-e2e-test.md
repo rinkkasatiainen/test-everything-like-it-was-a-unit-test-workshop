@@ -1,8 +1,7 @@
 # How to write an end-to-end test
 
 > AI-facing recipe, self-contained. Poke a **whole running host** from outside, like a browser —
-> HTTP in, WebSocket out. Prove the parts are actually plugged together. Human version:
-> `part-2/testing/docs/how-to/write-an-e2e-test.md`.
+> HTTP in, WebSocket out. Prove the parts are actually plugged together.
 
 ## Before you start
 

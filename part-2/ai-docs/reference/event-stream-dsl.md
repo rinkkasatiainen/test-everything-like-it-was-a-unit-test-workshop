@@ -2,19 +2,24 @@
 
 > AI-facing reference, self-contained. The listening/sending API under `src/dsl/`
 > (`event-stream.js`, `emit.js`, `exactly.js`, `sources/`) plus `createTrackerSpy` from
-> `@rinkkasatiainen/cfb-event-sourcing-testing`. Human version:
-> `part-2/testing/docs/reference/event-stream-dsl.md`.
+> `@rinkkasatiainen/cfb-event-sourcing-testing`.
 
 ## Two spy engines — pick by tier
 
-| Engine | Polls | Tier | Over these sources |
+| Engine | Builds on | Tier | Over these sources |
 |---|---|---|---|
-| `createTrackerSpy(source)` | `source.elements()` | **component** | `fromStore`, `fromProducer`, `fromChannel`, `fromBroker` |
-| `eventStream(source)` | `source.events()` | **integration** | `fromRabbit`, `fromWebSocket` |
+| `createTrackerSpy(source)` | `createSpy(source, messageVocabulary)` | **component** | `fromStore`, `fromProducer`, `fromChannel`, `fromBroker` |
+| `eventStream(source)` | `createSpy(source, eventVocabulary)` | **integration** | `fromRabbit`, `fromWebSocket` |
 
-A component test watches a nullable port's **output tracker** (the raw records a write/publish left
-behind) → `createTrackerSpy`. An integration test watches a **real transport** (facts off Rabbit,
-frames off a socket) → `eventStream`. The send side, `emit`, is shared. Import from `src/dsl`:
+**They are the same engine.** Both are `createSpy` from `@rinkkasatiainen/cfb-event-sourcing-tracking`
+over the same source interface: each polls `source.elements()` and resolves on the first poll where
+≥1 record passes every filter. They differ in only two ways — the **source** (a nullable port's
+output tracker vs. a real transport) and the **vocabulary** (the fluent sugar mixed on:
+`messageVocabulary` reads `{ routingKey, event }` records, `eventVocabulary` reads bare
+`{ metaData, payload }` events). So a component test watches a nullable port's **output tracker** (the
+raw records a write/publish left behind) → `createTrackerSpy`; an integration test watches a **real
+transport** (facts off Rabbit, frames off a socket) → `eventStream`. The send side, `emit`, is
+shared. Import from `src/dsl`:
 
 ```js
 import {
@@ -62,8 +67,9 @@ expect(tracker.data()).to.be.empty
 
 ## `eventStream(source)` — the integration-tier spy
 
-A fluent spy over a source exposing `events()`. Every filter returns a new stream (immutable);
-construction never blocks, so build before you act, call a terminal after.
+The **same `createSpy` engine** as `createTrackerSpy`, over a source exposing `elements()`, carrying
+the **event** vocabulary (records are bare `{ metaData, payload }` wire events). Every filter returns
+a new stream (immutable); construction never blocks, so build before you act, call the terminal after.
 
 ```js
 await eventStream(source)
@@ -71,39 +77,53 @@ await eventStream(source)
   .ofChannel('session-change-noted')
   .withPayload()
   .matchingPayload({ sessionId: exactly(mine), title: exactly('ES 101') })
-  .waitUntilFound(1)
+  .waitUntilFound(3) // SECONDS to wait (a timeout) — identical to createTrackerSpy
 ```
 
-Filters (compose in any order): `.ofChannel(type)` (`metaData.type`), `.ofCapability(cap)`
+Vocabulary sugar (compose in any order): `.ofChannel(type)` (`metaData.type`), `.ofCapability(cap)`
 (`metaData.capability`), `.withPayload()` (present; call before `matchingPayload`),
 `.matchingPayload(schema)` (closed conformance over `event.payload`), `.where(predicate)` (escape
-hatch), `.log(label?)`.
+hatch). Plus the base engine's `.matching(matcher)` and `.log()`, shared with `createTrackerSpy`.
 
 - **`matchingPayload` is a CLOSED check** — every schema key present and valid, no key outside the
   schema. Values are validators; `exactly(v)` is the common one. It always reads `event.payload`, so
   for data under another key (a WebSocket frame's `session`) use `.where(f => f.session?.sessionId === mine)`.
-- There is **no `.ofType`** and **no bare `.matching`** on this engine — use `.ofChannel` and
-  `.matchingPayload`.
+- There is **no `.ofType`** — use `.ofChannel`. `.matching(matcher)` *is* available (it is the base
+  engine method), but prefer the vocabulary where it fits.
 
-Terminals: `.waitUntilFound(n = 1, { timeout } = {})` (wait for **n matches**, `timeout` ms default
-from source), `.found()` (snapshot so far, never rejects), `.waitForNone({ during })` (`[]` after
-`during` ms with no match; rejects if a match arrives — the only honest negative over a real
-transport).
+Terminal: `.waitUntilFound(seconds)` — the one terminal, identical to `createTrackerSpy`: it polls
+every 300 ms and resolves on the first poll where ≥1 record passes every filter, and throws on
+timeout. There is **no `.found()` and no `.waitForNone()`** on this engine, and **no `{ timeout }`
+option** — the single argument is the number of seconds to wait.
 
-## The two `waitUntilFound` — do not copy the wrong one
+**Deep assertions and negatives — read the buffer directly.** To assert on the matched record's inner
+values, wait, then read it off the source: `source.elements().find(...)` (the integration twin of the
+component tier's `tracker.data().find(...)`). There is no negative terminal; to assert "none within a
+window" over a real transport, let a fixed window pass and assert the buffer holds no matching record:
 
-| Engine | Call | First arg | Timeout |
-|---|---|---|---|
-| `createTrackerSpy` | `.waitUntilFound(seconds)` | seconds to wait | the argument itself |
-| `eventStream` | `.waitUntilFound(n = 1, { timeout } = {})` | **count** of matches | `timeout` ms (`fromRabbit` default 3000) |
+```js
+await new Promise(r => setTimeout(r, 500))
+expect(source.elements().filter(mine)).to.be.empty
+```
 
-So `createTrackerSpy(...).waitUntilFound(1)` waits one second for any match;
-`eventStream(...).waitUntilFound(3)` waits for **three** matching events.
+## `waitUntilFound` — one meaning on both engines
+
+`waitUntilFound(seconds)` is the **same call** on `createTrackerSpy` and `eventStream`, because both
+*are* `createSpy`: the argument is **seconds to wait**, and the spy resolves on the first poll where
+≥1 record passes every filter, or throws on timeout. It is **never** a count of matches, and there is
+no `{ timeout }` option.
+
+So `createTrackerSpy(...).waitUntilFound(1)` waits up to one second for any match, and
+`eventStream(...).waitUntilFound(3)` waits up to **three seconds** — not for three events. Pick the
+window by how long the path can take: a nullable port settles in ~1 s; a real broker or socket wants
+longer (the integration tests use 3 s for bus→bus, 10 s for bus→WebSocket). The real-transport
+sources carry a `defaultTimeout` field (`fromRabbit` 3000, `fromWebSocket` 5000) used by the *live*
+spy; `waitUntilFound` does not read it — always pass the seconds explicitly.
 
 ## Sources
 
-`createTrackerSpy` wants `{ elements(): object[], close() }`; `eventStream` wants `{ events():
-object[], defaultTimeout?, close() }`.
+Both engines want the **same** source interface — `{ elements(): object[], close() }` — and poll
+`elements()`. A real-transport source adds `liveStream(cb)` and a `defaultTimeout` for the live spy.
 
 | Source | Tier | Reads | Record shape |
 |---|---|---|---|
@@ -141,6 +161,6 @@ Eventually` works, so the same call drives an in-memory broker and a real `Rabbi
 ## The property this buys
 
 Within one engine, filters and terminals know nothing about the transport underneath. Swap
-`fromRabbit` for `fromWebSocket` and the `eventStream` chain above does not change. The seam between
-the two engines **is** the tier boundary: component reads a tracker's `elements()`, integration
-reads a transport's `events()`.
+`fromRabbit` for `fromWebSocket` and the `eventStream` chain above does not change. The tier boundary
+is only the **source and vocabulary** you hand the one engine: component reads a nullable port's
+output tracker through `elements()`, integration reads a real transport through the same `elements()`.

@@ -1,13 +1,12 @@
 ---
 name: part-2-nullables
 description: >-
-  Part 2 workshop SUB-LESSON on nullables, spies and why this workshop uses no mocks — a focused
-  Socratic mini-lesson reached ONLY from inside the part-2-draw-the-box coach, after the box has
-  been drawn, when the participant gets tangled substituting infrastructure ("should I mock the
-  bus?", "how do I check the event was published?", "why can't I read the row back?"). Not an entry
-  point: do NOT load this to start Part 2 work — start with part-2-draw-the-box, which gates on
-  Part 2 and draws the box first, then routes here. Part 2 only. Teaches the distinction; does not
-  write the test.
+  Part 2 workshop sub-lesson. Starts from the test doubles a participant already knows — mocks,
+  stubs, spies — and shows how this workshop observes behaviour with a nullable adapter instead,
+  with no spy wiring, and why it uses no mocks. Invoked by the part-2-draw-the-box coach (or
+  directly) when a participant is tangled on substituting infrastructure — "should I mock the
+  bus?", "how do I check the event was published?", "why can't I read the row back?". Part 2 only.
+  Teaches the distinction; does not write the test.
 ---
 
 # Nullables, spies, and why no mocks
@@ -21,7 +20,7 @@ they are on Part 2 and has NOT yet drawn a box with the coach — do **not** sta
 Instead load `part-2-draw-the-box`, run its gate ("Are you working on Part 2…?") and draw the
 box first; this lesson is something that coach routes *into*, not out of.
 
-Once the box is drawn: **open `part-2/testing/ai-docs/coach/nullables.md` and follow it** — teach
-the one distinction Socratically, then send the participant back to
-`part-2/testing/ai-docs/coach/draw-the-box.md` to finish drawing their box. Do not write their
-test here.
+Once the box is drawn: **open `part-2/ai-docs/coach/nullables.md` and follow it** — start from the
+mocks and spies they already know, then *show* how a nullable gives the same observation with none
+of the wiring, then send the participant back to `part-2/ai-docs/coach/draw-the-box.md` to finish
+drawing their box. Do not write their test here.

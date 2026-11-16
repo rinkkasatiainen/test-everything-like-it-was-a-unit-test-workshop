@@ -1,7 +1,6 @@
 # Anatomy of a component test — the method, not the API
 
-> AI-facing explanation, self-contained. Human version:
-> `part-2/testing/docs/explanation/anatomy-of-a-component-test.md`. For the step-by-step, see
+> AI-facing explanation, self-contained. For the step-by-step, see
 > `../how-to/write-a-component-test.md`.
 
 A component test asks one question: *does my capability do the right thing?* To ask it honestly it

@@ -2,8 +2,7 @@
 
 > AI-facing recipe, self-contained. Prove a published contract kit is internally consistent, so
 > every capability that imports it can trust it. Worked on `session-scheduled`; the same shape fits
-> `session-proposed` and `session-change-noted`. Human version:
-> `part-2/testing/docs/how-to/write-a-contract-test.md`.
+> `session-proposed` and `session-change-noted`.
 
 ## What this test covers
 

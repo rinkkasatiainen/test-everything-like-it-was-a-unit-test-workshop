@@ -1,7 +1,6 @@
 # The tiers — how real the edges are
 
-> AI-facing explanation, self-contained. Human version:
-> `part-2/testing/docs/explanation/testing-levels.md`.
+> AI-facing explanation, self-contained.
 
 Every tier tests the **same capability doing the same job**. They differ only in how much of
 the edges (store, broker, socket) is the real thing. One axis, a dial — not a ladder:

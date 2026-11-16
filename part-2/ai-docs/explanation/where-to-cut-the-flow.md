@@ -1,7 +1,6 @@
 # Where to cut the flow — breadth, not just fidelity
 
-> AI-facing explanation, self-contained. Human version:
-> `part-2/testing/docs/explanation/where-to-cut-the-flow.md`.
+> AI-facing explanation, self-contained.
 
 `testing-levels.md` draws one axis — how real the edges are. This is the other one, at right
 angles, that decides whether a *component* test stays a component test.

@@ -1,8 +1,7 @@
 # How to write a component test
 
 > AI-facing recipe, self-contained. One capability, enabled by hand over nullable ports, no Docker,
-> nothing running. Five shapes are worked here. Human version:
-> `part-2/testing/docs/how-to/write-a-component-test.md`.
+> nothing running. Five shapes are worked here.
 
 ## The shape every component test shares
 
@@ -15,8 +14,8 @@
 4. **Act** by driving the one inbound seam (`consumer.simulate`, an HTTP `post`, or a `get`).
 5. **Assert** on the capability's own output (its write, publish, or response), read off a spy.
 
-No `componentHost` required (though `../reference/component-host-fixture.md` offers one), no mock, no
-"was publish called". The matchers that read a write record live at the top of the file:
+No fixture, no mock, no "was publish called" — the test builds the ports itself (see
+`../reference/ports.md`). The matchers that read a write record live at the top of the file:
 
 ```js
 const ofOp = op => ({ matches: r => r.op === op })
@@ -87,8 +86,11 @@ it('appends exactly one session-proposed fact when a valid command is posted', a
 })
 ```
 
-(Scheduling's `HTTP → append` is identical in shape — `commandWith` + `supertest` + assert the
-append — with `session-scheduled` instead of `session-proposed`.)
+(Scheduling's `HTTP → append` is the same flow — `supertest` POST, then assert the append — but
+**not** the same builder or command shape: it uses `scheduleSessionCommandWith({})` from
+`@rinkkasatiainen/cfb-session-scheduling-contracts`, posts to `/api/commands/schedule-session`, and
+reads its expected values off `command.payload` (the fields are nested, unlike Proposal's flat
+command). The append is `session-scheduled`, matched on `eventId, sessionId, day, time`.)
 
 ## Shape C — HTTP → query (a read model)
 

@@ -13,7 +13,7 @@
     "db:reset": "node ./node_modules/@rinkkasatiainen/cfb-local-host/bin/db-compose.mjs down -v && npm run db:up",
     "clean": "rm -rf public",
     "test": "./node_modules/.bin/mocha test/**/*.test.js",
-    "test:component": "./node_modules/.bin/mocha 'test/component/**/*.test.js' 'testing/test/component-integration/**/*.test.js'",
+    "test:component": "./node_modules/.bin/mocha 'test/component/**/*.test.js' 'test/component-integration/**/*.test.js'",
     "test:component-integration": "./node_modules/.bin/mocha 'test/component-integration/**/*.test.js'",
     "test:contract": "./node_modules/.bin/mocha 'test/contract/**/*.test.js'",
     "test:resilience": "./node_modules/.bin/mocha 'test/resilience/**/*.test.js'",

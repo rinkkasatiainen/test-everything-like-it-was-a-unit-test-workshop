@@ -1,8 +1,7 @@
 # How to write an integration test
 
 > AI-facing recipe, self-contained. The same capability, the same flow, over **real Postgres and
-> real RabbitMQ**. One capability, not the whole board. Human version:
-> `part-2/testing/docs/how-to/write-an-integration-test.md`.
+> real RabbitMQ**. One capability, not the whole board.
 
 ## Before you start
 
@@ -54,11 +53,12 @@ await eventStream(listener)
   .withPayload()
   .matchingPayload({ eventId: exactly(eventId), sessionId: exactly(sessionId), title: exactly(title),
                      proposer: exactly(userId), duration: exactly(duration) })
-  .waitUntilFound(3) // COUNT of matches here (+ a separate { timeout }); NOT the component tier's seconds
+  .waitUntilFound(3) // SECONDS to wait — same call as the component tier (a real broker wants longer)
 ```
 
-> The two `waitUntilFound` differ. `createTrackerSpy(...).waitUntilFound(seconds)` = a timeout.
-> `eventStream(...).waitUntilFound(n, { timeout })` = wait for `n` matches. See
+> `waitUntilFound(seconds)` means the **same thing on both engines** — a timeout in seconds, resolving
+> on the first match — because `eventStream` and `createTrackerSpy` are the same `createSpy` engine.
+> The only difference at this tier is a longer window, because delivery is over a socket. See
 > `../reference/event-stream-dsl.md`.
 
 **3. Drain: the relay runs on a timer**, because a real broker delivers asynchronously (the
@@ -102,13 +102,16 @@ diagnostic value of keeping both.
 
 ## Negative over a real transport
 
-There is no certain "nothing, ever" on a real bus. Assert "none within a window":
+There is no certain "nothing, ever" on a real bus, and the spy has **no `waitForNone`**. Assert "none
+within a window": let a fixed window pass, then read the source buffer directly and assert nothing of
+yours arrived (match by your own unique id, never "the exchange is empty").
 
 ```js
-await eventStream(listener).ofChannel('...').waitForNone({ during: 500 })
+await new Promise(r => setTimeout(r, 500))
+expect(listener.elements().filter(mine)).to.be.empty
 ```
 
 ## See also
 
 - `write-a-component-test.md` — the same flow, nullable, that this mirrors.
-- `../reference/event-stream-dsl.md` — `fromRabbit`, `eventStream`, the two `waitUntilFound`.
+- `../reference/event-stream-dsl.md` — `fromRabbit`, `eventStream`, and the shared `waitUntilFound`.

@@ -1,8 +1,7 @@
 # How to inject a bus failure (resilience tests)
 
 > AI-facing recipe, self-contained. Test what a capability does when a fact fails to reach the bus —
-> without throwing, without touching the real adapter. Human version:
-> `part-2/testing/docs/how-to/inject-a-failure.md`.
+> without throwing, without touching the real adapter.
 
 A command does not publish. It appends the fact to the store; the **relay** drains the outbox and
 publishes each fact, marking it published only *after* the producer confirms. So "the send failed"
@@ -44,8 +43,9 @@ expect(broker.published).to.eql([])                          // yet the bus neve
 
 Against the **nullable** broker this negative is *certain* — it settles synchronously, so if it is
 not in `broker.published` after `settled()`, it is never coming. Over a **real** RabbitMQ you can
-only assert "nothing within a window" (`eventStream(...).waitForNone({ during: 500 })`) — an honest
-limit of a real transport, worth naming in the room.
+only assert "nothing within a window" — let a window pass and read the source buffer directly
+(`await new Promise(r => setTimeout(r, 500)); expect(listener.elements().filter(mine)).to.be.empty`),
+since the spy has no `waitForNone` — an honest limit of a real transport, worth naming in the room.
 
 ### Why it is worse than an error
 

@@ -30,8 +30,11 @@ const proposed = buildSessionProposedFactWith({ payload: { title: 'ES 101' } })
 const proposed = buildSessionProposedFactWith()
 ```
 
-Commands have their own builders in the same package: `commandWith({ title: 'ES 101' })`,
-`commandWithDuration(...)`, and for Scheduling `setLengthCommandWith(...)`.
+Commands have their own builders in the same package. Proposal ships `commandWith({ title: 'ES 101' })`
+and `commandWithDuration(...)`, whose fields sit at the top level (`command.sessionId`). Scheduling
+ships `scheduleSessionCommandWith(...)` and `setLengthCommandWith(...)`, whose fields are **nested**
+under `command.payload` (`command.payload.sessionId`) — so read the two shapes off the builder, never
+assume they match.
 
 ## Why this is safe
 

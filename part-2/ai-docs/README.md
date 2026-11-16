@@ -36,7 +36,7 @@ ai-docs/
     build-a-fact-from-a-contract.md    # the one habit: never hand-roll a message
   reference/                 # LOOK UP — the API as built
     event-stream-dsl.md        # the two spy engines, the sources, emit, the two waitUntilFound
-    component-host-fixture.md  # the componentHost fixture and the port vocabulary
+    ports.md                   # the port vocabulary: nullable vs real builders, how to observe each
     contract-packages.md       # what each capability's contract kit ships
 ```
 

@@ -1,7 +1,6 @@
 # Contract testing — the agreement axis
 
-> AI-facing explanation, self-contained. Human version:
-> `part-2/testing/docs/explanation/contract-testing.md`.
+> AI-facing explanation, self-contained.
 
 The tiers all ask *does my capability behave correctly?* A contract test asks what none of them
 can: **do two capabilities still agree on the message that passes between them?** A different

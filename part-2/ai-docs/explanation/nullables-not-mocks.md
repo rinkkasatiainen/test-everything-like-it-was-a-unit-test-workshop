@@ -1,8 +1,7 @@
-An# Nullables, spies and mocks — the hinge
+# Nullables, spies and mocks — the hinge
 
 > AI-facing explanation. Self-contained: everything an assistant needs to coach this point
-> without reading the rest of the repo. The human-facing version is
-> `part-2/testing/docs/explanation/nullables-and-spies.md`; this is the condensed, coach-ready cut.
+> without reading the rest of the repo. This is the condensed, coach-ready cut.
 
 Three words get used as if they were the same thing. They are not, and the difference decides
 whether a Part 2 test reads like a unit test or like a cage of expectations.
