@@ -4,7 +4,7 @@
 > capability"* — this file gives the coach enough to use the term operationally. The **authoritative,
 > human-facing definition** of a business capability *and the composition story behind the board*
 > is Aki's own write-up:
-> [`final-docs/explanation/capabilities-and-composition.md`](../../human-docs/explanation/capabilities-and-composition.md).
+> [`human-docs/explanation/capabilities-and-composition.md`](../../human-docs/explanation/capabilities-and-composition.md).
 > **Send the participant there to read it** — this file only distills what the coach needs to draw a
 > box. Source pictures:
 > [`images/capability-map-whole.png`](../../../images/capability-map-whole.png) and

@@ -74,16 +74,37 @@ I'll give you an example. Again, Codefreeze board.
 
 On this repo, the Codefreeze board is a composition of all the capabilities running in a single monolith. The only thing
 that _main_ does, it registers a bunch of capabilities (well, all of them), initializes them with the proper
-infrastructure (postgres, rabbitmq - or pglite + in-memory bus) and has it running. 
+infrastructure (postgres, rabbitmq - or pglite + in-memory bus) and has it running.
 
 And, and this is the cool part - in the real repository for Codefreeze Board, this nodejs host is just one way to deploy
-the app. I also have an AWS serverless version. Just building new infra layer (lambda handlers, EventBridge, DB) - and 
-passing them into the core domain. 
+the app. I also have an AWS serverless version. Just building new infra layer (lambda handlers, EventBridge, DB) - and
+passing them into the core domain.
 
 Core domain does not change. I have 3 ways to run the app - all with exactly the same domain code:
- - Serverless on AWS
- - NodeJS with postgres + rabbitmq (e.g using Docker)
- - fully in memory.
+
+- Serverless on AWS
+- NodeJS with postgres + rabbitmq (e.g using Docker)
+- fully in memory.
 
 A set of capabilities can be composed into whatever shape of services you like. Then microservice vs. monolith becomes
 financial decision only - which makes more sense.
+
+### Component / Integration / E2E testing
+
+How I like to think about component test is that it's testing a single logical part without any infrastructure linked to
+it. Earlier I'd spin off a new service with relevant services, routes and databases. In the 'Capabilities and
+Composition', I only register a capability to a root - and let it do the rest. Of course the root needs to register the
+relevant Infra plumbing my capability uses.
+
+So, **a component tes**t, for me, is running the app with just a single capability. Just SessionDiscovery, or
+SessionProposal, and then poking around with the Sandi Metz model.
+
+**Integration test**, then is one or more capabilities and the actual infra wiring. A real Database, a real RabbitMQ. If
+a test requires a real DB, I'd call it integration test.
+
+And **End-2-End** test is one where we spin off the whole app. With/without frontend. That's a different question.
+
+## Nice, in theory, what's next?
+
+Want to see this in action? Just open [event-modeling.md](./event-modeling.md) to see how all this maps into services
+and eventually code.

@@ -4,7 +4,12 @@
 > system *actually does*: every command, every fact, every read model, laid out as beats over time.
 > It is not decoration — it is the **map the participant draws boxes on**. Each coloured transition
 > is a candidate box, and the three Part 2 flows are three kinds of beat. Teach the participant to
-> read it and "draw the box" stops being abstract. Source pictures:
+> read it and "draw the box" stops being abstract. The **authoritative, human-facing walkthrough** —
+> the legend in prose, Casey's beats one by one, and the Sandi Metz box-drawing worked through on
+> them — is Aki's own write-up:
+> [`human-docs/explanation/event-modeling.md`](../../human-docs/explanation/event-modeling.md).
+> **Send the participant there to read it** (but mind its spoiler note — the back half works a box
+> in detail). This file distills what the coach needs. Source pictures:
 > [`images/event-model-legend.png`](../../../images/event-model-legend.png) (the vocabulary) and
 > [`images/event-model-host.png`](../../../images/event-model-host.png) (Casey the host's day).
 
