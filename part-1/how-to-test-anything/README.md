@@ -135,6 +135,16 @@ My model for testing any unit is as follows (The Sandi Metz model).
 
 Let's see this in action.
 
+## Getting started!
+
+you need to open 'part-1' in your console, and run few commands:
+```shell ../test-everything-like-it-was-a-unit-test-workshop/part-1/how-to-test-anything/javascript
+npm install
+
+npm run test
+```
+If you see one test failing saying "Remove this when your start working", you are good to go
+
 ## Ready to start?
 
 [Step 1](./step1.md)
