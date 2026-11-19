@@ -3,6 +3,8 @@
 > AI-facing reference, self-contained. What each capability publishes as its contract, and what a
 > test imports. A contract test (and a tier test's fixtures) must read the **provider-owned**
 > artifact as a dependency — never a copy.
+>
+> **Send the participant to:** [`human-docs/reference/builders/index.md`](../../human-docs/reference/builders/index.md) (every builder, its shape, how to verify it) and [`human-docs/reference/contract-testing/README.md`](../../human-docs/reference/contract-testing/README.md) (the recordings each package ships). This file is for the coach.
 
 ## Scheduling — the worked example (exists, published)
 

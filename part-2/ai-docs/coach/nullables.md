@@ -9,12 +9,20 @@
 > "nullable."** Do not open with it, and do not quiz them on it. Start from the test doubles they
 > already know — mocks, stubs, spies — then **show** how this workshop gets the same observation from
 > a nullable with none of the wiring. Lead with a question or two, then demonstrate with real code.
-> Do not write their test here; send them back to `draw-the-box.md` once the penny drops.
+> This lesson is about the distinction, not the test: once the penny drops, return to
+> `draw-the-box.md` with them, where the test gets written (by them, or with you if they ask).
 
 ---
 
-Grounded in `part-2/ai-docs/explanation/nullables-not-mocks.md` — read it before you teach, and cite
-it.
+Grounded in `part-2/ai-docs/explanation/nullables-not-mocks.md` — read it before you teach. That
+file is for **you**. When you cite something for the participant to read, cite the human-facing
+versions instead — never the ai-docs page:
+
+- the idea: [`part-2/human-docs/explanation/nullables.md`](../../human-docs/explanation/nullables.md)
+  ("Why no mocks", "How you see what happened: output tracking")
+- the edge they are on: its page under
+  [`part-2/human-docs/reference/nullables/`](../../human-docs/reference/nullables/README.md) — how to
+  build it nullable, drive it, and put a spy on it
 
 ## 1. Start where they are — what would you normally reach for?
 
@@ -83,7 +91,9 @@ Only now name the three, as a one-liner they can keep:
 
 The trackers they will actually use: `store.trackChanges()`, `producer.trackChanges()`,
 `channel.trackChanges()`, and the raw `broker.published` array. Output tracking even works on the
-*real* adapter — it is a seam you turn on at runtime, not a property of being nullable.
+*real* adapter — it is a seam you turn on at runtime, not a property of being nullable. Each has its
+own page for the participant: `human-docs/reference/nullables/event-store.md`, `producer.md`,
+`live-channel.md`, `in-memory-broker.md`.
 
 ## 4. Tie it back to Part 1
 
@@ -97,5 +107,7 @@ Same rules, bigger box.
 ## 5. Hand back
 
 Once they can say *why* a spy over a nullable beats a mock here — and, ideally, have felt the "oh,
-there's nothing to wire" — send them back to `part-2/ai-docs/coach/draw-the-box.md` to finish drawing
-their box. Do not write the test for them.
+there's nothing to wire" — go back to `part-2/ai-docs/coach/draw-the-box.md` (that prompt is for
+you, not something to hand them) and finish drawing their box with them. If they want to read more
+first, give them [`part-2/human-docs/explanation/nullables.md`](../../human-docs/explanation/nullables.md).
+The test itself is written back in `draw-the-box.md` §5 — by them, or together with you if they ask.

@@ -3,6 +3,8 @@
 > AI-facing recipe, self-contained. Prove a published contract kit is internally consistent, so
 > every capability that imports it can trust it. Worked on `session-scheduled`; the same shape fits
 > `session-proposed` and `session-change-noted`.
+>
+> **Send the participant to:** [`human-docs/reference/contract-testing/kit-self-test.md`](../../human-docs/reference/contract-testing/kit-self-test.md) (and the other pages in that folder). This file is for the coach.
 
 ## What this test covers
 
@@ -15,7 +17,7 @@ reaction — those provider-end and consumer-end tests live in the capability's 
 ## Before you start
 
 Depend on the provider's contracts package — **never a copied schema** — and register its chai-free
-matcher with your own chai. No Docker, no host, no network; `yarn test:contract` runs offline.
+matcher with your own chai. No Docker, no host, no network; `npm run test:contract` runs offline.
 
 ```js
 import { use, expect } from 'chai'

@@ -3,6 +3,8 @@
 > AI-facing reference, self-contained. The ports every tier test is written in — how to build each
 > one nullable or real, and how to observe what crossed it. The spies that read these ports live in
 > `event-stream-dsl.md`.
+>
+> **Send the participant to:** [`human-docs/reference/nullables/README.md`](../../human-docs/reference/nullables/README.md) and the page for the edge in question. This file is for the coach.
 
 ## The test builds the ports — there is no fixture
 

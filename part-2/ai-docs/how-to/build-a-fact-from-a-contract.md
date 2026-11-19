@@ -1,6 +1,8 @@
 # How to build a fact (or command) from a contract — never by hand
 
 > AI-facing recipe, self-contained. The one habit the whole technique rests on.
+>
+> **Send the participant to:** [`human-docs/how-to/write-a-component-test.md`](../../human-docs/how-to/write-a-component-test.md) ("Building a message."), then the builder's page under [`human-docs/reference/builders/`](../../human-docs/reference/builders/index.md). This file is for the coach.
 
 Every message a test injects — the inbound fact for a reaction, the command for a handler — comes
 from the **provider's published builder**, not from an object literal you typed. A hand-rolled

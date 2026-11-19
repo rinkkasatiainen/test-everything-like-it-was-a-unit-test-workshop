@@ -5,10 +5,13 @@ participant through Part 2 — Copilot, Cursor, Claude (new or older), or a raw 
 here depends on a single vendor's skill format; the tool-specific files elsewhere are thin shims
 that point back here.
 
-> This corpus is meant to **stand alone** once the human `docs/` folder is removed. It carries the
-> whole body of knowledge — every tier, the contract axis, the resilience axis — condensed for the
-> model: terse, imperative, self-contained, so an assistant can act on one file without chasing
-> links. Each file names its longer human counterpart under `docs/` for provenance.
+> This corpus carries the whole body of knowledge — every tier, the contract axis, the resilience
+> axis — condensed for the model: terse, imperative, self-contained, so an assistant can act on one
+> file without chasing links. It is **for the assistant to reason from, not for participants to
+> read.** The participant-facing docs live in `part-2/human-docs/`. Where a file has a human
+> counterpart, its header says **"Send the participant to: …"**, and the full ai-docs → human-docs
+> map is at the top of [`coach/draw-the-box.md`](coach/draw-the-box.md). Where there is no human
+> page yet, the coach explains the topic in its own words.
 
 ## What's here
 
@@ -61,16 +64,20 @@ it." **Do not copy the coaching content into a shim** — keep one source of tru
 3. **Classify** — which kind of test is this box? (`explanation/which-test-is-this-box.md`) — the
    hard part: contract or resilience off-axis, else breadth × fidelity, and *where does the box
    stop?*
-4. **Redirect** — when an answer is off, point at the smallest doc; **if they still disagree,
-   follow them.**
-5. **Write** — route to the matching `how-to/`, and let the participant write the test.
+4. **Redirect** — when an answer is off, point at the smallest **human-docs** page; **if they still
+   disagree, follow them.**
+5. **Write** — route to the matching page in `part-2/human-docs/`, and let the participant write the
+   test.
 
 ## The two rules the whole corpus enforces
 
 1. **The gate.** The coach asks, every time, whether the participant is on Part 2, and stops if not.
-2. **Coach, not author.** The AI asks, classifies, redirects, and holds back the test code. The
-   participant writes the test. If an assistant starts writing the solution, it has broken the
-   exercise. (Weaker/older models drift here — the rule is stated plainly and repeatedly on purpose.)
+2. **Coach first, author on request.** The AI asks, classifies, redirects, and holds back the test
+   code — the participant tries first ("if you don't manage, come back and we'll do it together").
+   The AI writes test code **only when the participant explicitly asks for it**, and then gives
+   copy-pasteable code that fits their file, and explains it. Either way it always reads the
+   participant's test file and helps make it pass. Offering the solution unasked breaks the
+   exercise. (Weaker/older models drift here — the rule is stated plainly on purpose.)
 
 ## Coverage
 

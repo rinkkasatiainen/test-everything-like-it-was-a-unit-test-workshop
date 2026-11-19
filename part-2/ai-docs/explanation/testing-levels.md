@@ -47,7 +47,7 @@ processes speak over a socket.
 
 ## e2e — a whole running host, poked from outside
 
-No fixture boots anything. A host is already running (`yarn start:memory`, or the Docker stack);
+No fixture boots anything. A host is already running (`npm run start:pg` for the e2e test, which seeds the Docker Postgres; `npm start` is the in-memory host);
 the test is a client — HTTP in, WebSocket out, like a browser. Proves the wiring that only exists
 when everything is up: relay draining, projection building, live channel pushing.
 

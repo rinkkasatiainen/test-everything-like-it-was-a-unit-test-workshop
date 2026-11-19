@@ -1,71 +1,92 @@
 # How to write an end-to-end test
 
 > AI-facing recipe, self-contained. Poke a **whole running host** from outside, like a browser —
-> HTTP in, WebSocket out. Prove the parts are actually plugged together.
+> sign in, HTTP in, WebSocket out. Prove the parts are actually plugged together.
+>
+> **Send the participant to:** [`human-docs/how-to/write-an-e2e-test.md`](../../human-docs/how-to/write-an-e2e-test.md) (setup to paste, the journey, the hints). This file is for the coach.
 
 ## Before you start
 
-A host must already be running. Simplest for a workshop room is the no-Docker one — from `../host`:
+From `part-2/`, in one terminal:
 
 ```bash
-yarn start:memory      # whole board, pglite + nullable bus, on http://localhost:3001
+npm run start:pg       # db:up + ui:build + host on http://localhost:3001, reading Docker Postgres
 ```
 
-Or the real stack: `yarn db:up && yarn start:local`. The e2e test does not care which — it is a
-client either way. Point it at the host:
+and in another:
 
 ```bash
-CFB_BASE_URL=http://localhost:3001 yarn test:e2e
+npm run test:e2e       # mocha 'test/e2e/**/*.test.js'
 ```
 
-## The flow: HTTP → … → WebSocket
+**`start:pg`, not `npm start`.** The test makes its own event by inserting a `conferences` row into the
+Docker Postgres; the in-memory host (`npm start`, pglite) never reads it, so the event is unknown to it.
+Overrides: `CFB_BASE_URL` (default `http://localhost:3001`), `CFB_DATABASE_URL` (default
+`postgres://cfb:cfb-local-dev@localhost:55432/cfb_local`).
 
-A proposed session travels: `POST` → fact on the bus → Discovery reacts → the board projection
-updates → the live channel pushes to every connected client. The e2e test checks the two ends and
-lets the middle be real.
+Worked answer (answer key): `test/e2e/board.e2e.test.js`.
 
-1. **Connect a client first**, before you poke — a late client misses the push:
-   ```js
-   const board = eventStream(await fromWebSocket(`${wsBase}/api/event/${eventId}/sessions/live`))
-   ```
-2. **Mint a correlation id** you can recognise among everyone else's traffic:
-   ```js
-   const mine = `e2e-${Date.now()}-${Math.random().toString(36).slice(2)}`
-   ```
-3. **Act** over real HTTP against the running host:
-   ```js
-   await request(baseUrl).post('/api/commands/propose-session')
-     .send({ title: 'Live from e2e', day: 'd-tue', correlationId: mine })
-   ```
-4. **Wait for your frame** — matched by *your* id, tolerant of everything else on the channel:
-   ```js
-   await board.where(frame => frame?.correlationId === mine).waitUntilFound(1, { timeout: 8000 })
-   ```
-5. **Close** the socket in `afterEach`.
+## The setup (the participant pastes it from the human how-to)
 
-## The rules that keep e2e from flaking (literal)
+- **Sign in** like the login form: `POST /api/auth/login`, `application/x-www-form-urlencoded`,
+  `{ username: 'casey', password: 'CfbBoardPassword123', returnTo: '/' }`, `redirect: 'manual'`.
+  Success = 302 + `set-cookie`; failure = 302 to `?error=…`, no cookie. Keep `name=value` of the cookie
+  and send it as `Cookie:` on every later request — identity comes from the cookie, **never from the
+  body**.
+- **Clean room**: a random slug `uniqueId('e2e-event')`, inserted in `before`:
+  `insert into conferences (slug, name, starts_on, ends_on) values ($1, $2, '2027-01-11', '2027-01-19')`;
+  deleted in `after` (`conferences` and `board where event_id = $1`), then `pool.end()`. The backend
+  does not invent events — an unknown slug is 404 on the query and close code 4004 on the socket.
+- Helpers: `postCommand(cookie, path, body)` (JSON POST), `getSessions(cookie, eventId)` →
+  `GET /api/event/{eventId}/sessions` → `{ sessions: [...] }`.
 
-- **Tolerant assertions, always.** The host has state from every other poke in the room. Match
-  *your* event by *your* correlation id. **Never** `expect(frames).to.have.length(1)` — assert
-  "found at least one that is mine".
-- **Connect before you act.** On a running host the channel seeds/replays; a client that connects
-  after the push can miss it. Open the socket, *then* post.
-- **Expect replays and seeds.** The live channel seeds a new client from the current query, then
-  sends upserts. Your `where(...)` filter already handles this — it ignores everything not yours.
-- **Keep them few.** One or two e2e tests prove the wiring. They are the worst tool for *locating* a
-  bug — when one goes red, a component test tells you where. Let e2e answer only "is it plugged in".
+## The journey (one `it`, `this.timeout(20000)`)
+
+1. **Empty board**: `getSessions` → 200 and `sessions` empty.
+2. **Connect first**: `board = await fromWebSocket(\`${WS_BASE}/api/event/${eventId}/sessions/live\`, { headers: { Cookie: cookie } })`.
+   No replay for a late client.
+3. **Propose** — a **flat** body: `POST /api/commands/propose-session`
+   `{ eventId, sessionId, title, commandId }` → 200.
+4. **Schedule** — a **`{ payload }`** body: `POST /api/commands/schedule-session`
+   `{ payload: { eventId, sessionId, day: 'd-jan14', time: '13:00', commandId, correlationId } }` → 200.
+   `d-jan14` is Thursday: every event gets the same hard-coded week (2027-01-09…16).
+5. **The push** (participant writes it):
+   ```js
+   await eventStream(board)
+     .where(f => f.session?.sessionId === sessionId && f.session?.day === THURSDAY)
+     .waitUntilFound(15)                       // SECONDS
+   const frame = board.elements().find(f => f.session?.sessionId === sessionId && f.session?.day === THURSDAY)
+   expect(frame.session).to.include({ sessionId, title, day: THURSDAY, time: TIME, status: 'scheduled' })
+   ```
+   The propose can push a frame first (no day yet) — filtering on `day` waits for the scheduled one.
+6. **The query agrees** (participant writes it): `getSessions` again, find by `sessionId`,
+   `to.include({ title, day, time })`.
+
+Steps 1–4 are given in the human how-to; 5–6 are the exercise. Command bodies may be built with
+`commandWith(...)` / `scheduleSessionCommandWith({ payload: ... })` with the ids and `eventId`
+overridden.
 
 ## The WebSocket frame shape
 
-The board frame is `{ type: 'session', session: { … } }`. Top-level `type` is the literal
-`'session'`, not an event type with `metaData`, so `.ofChannel` does not match and `.matchingPayload`
-reads the wrong key. Narrow with `.where(f => f.type === 'session' && f.session?.sessionId === mine)`.
+`{ type: 'session', session: { …the whole board row… } }`. Top-level `type` is the literal
+`'session'`, no `metaData` — `.ofChannel` does not match and `.matchingPayload` reads the wrong key.
+Narrow with `.where(...)`; deep-assert on `board.elements()` after the wait.
 
-## Status note
+## The rules that keep e2e from flaking (literal)
 
-The HTTP half works against any running host today. If the host has **no live channel endpoint yet**,
-the `fromWebSocket` steps are pending — the HTTP-and-query half stands alone: poke, then poll the
-board query until your session appears.
+- **Tolerant assertions.** The host has everyone's state. Match *your* session by *your* id; never
+  `to.have.length(1)` on frames.
+- **Connect before you act.**
+- **Own clean room** — a fresh event per run, cleaned up after.
+- **Keep them few.** One or two prove the wiring; when one goes red, a component or integration test
+  locates the bug.
+
+## When the participant is stuck — check these first
+
+No host / `npm start` instead of `npm run start:pg` · sign-in refused (unseeded DB → `npm run db:reset`)
+· socket opened after the commands · filter matching the propose frame, not the scheduled one ·
+schedule body not wrapped in `payload` · `waitUntilFound` read as a count · the test's own 20 s timeout
+missing (mocha default here is 10 s).
 
 ## See also
 

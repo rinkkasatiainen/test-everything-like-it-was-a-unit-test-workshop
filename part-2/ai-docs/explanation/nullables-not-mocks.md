@@ -2,6 +2,8 @@
 
 > AI-facing explanation. Self-contained: everything an assistant needs to coach this point
 > without reading the rest of the repo. This is the condensed, coach-ready cut.
+>
+> **Send the participant to:** [`human-docs/explanation/nullables.md`](../../human-docs/explanation/nullables.md). This file is for the coach.
 
 Three words get used as if they were the same thing. They are not, and the difference decides
 whether a Part 2 test reads like a unit test or like a cage of expectations.

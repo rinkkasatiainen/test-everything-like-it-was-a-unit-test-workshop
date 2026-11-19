@@ -152,15 +152,6 @@
     eslint-plugin-import "^2.32.0"
     eslint-plugin-mocha "^11.0.0"
 
-"@rinkkasatiainen/cfb-event-sourcing-bus-rabbitmq@^0.9.0":
-  version "0.9.3"
-  resolved "https://npm.pkg.github.com/download/@rinkkasatiainen/cfb-event-sourcing-bus-rabbitmq/0.9.3/9b8567a386d19fba08e9d08c43263a22455c933f#9b8567a386d19fba08e9d08c43263a22455c933f"
-  integrity sha512-bQEnDSwFDddXfymMiu6kYL2uWayuJkixIJf5QSX61jmMmV5EgvFYC9a9Lgk7j5TqJ6xUaA6i6ScFlCessOWrPg==
-  dependencies:
-    "@rinkkasatiainen/cfb-event-sourcing-tracking" "^0.9.3"
-    "@rinkkasatiainen/cfb-functional" "^1.0.1"
-    amqplib "2.2.0"
-
 "@rinkkasatiainen/cfb-event-sourcing-bus-rabbitmq@^1.0.0":
   version "1.0.0"
   resolved "https://npm.pkg.github.com/download/@rinkkasatiainen/cfb-event-sourcing-bus-rabbitmq/1.0.0/8b2b360a48bb45c40d0a258e4886830a000a309b#8b2b360a48bb45c40d0a258e4886830a000a309b"
@@ -170,7 +161,7 @@
     "@rinkkasatiainen/cfb-functional" "^1.1.0"
     amqplib "2.2.0"
 
-"@rinkkasatiainen/cfb-event-sourcing-core@^0.9.0", "@rinkkasatiainen/cfb-event-sourcing-core@^0.9.3":
+"@rinkkasatiainen/cfb-event-sourcing-core@^0.9.3":
   version "0.9.3"
   resolved "https://npm.pkg.github.com/download/@rinkkasatiainen/cfb-event-sourcing-core/0.9.3/6e22405e1f565ee2e3fe3b40cb78389d758910a4#6e22405e1f565ee2e3fe3b40cb78389d758910a4"
   integrity sha512-SSDhirqz7QydrsX4IKHgeFneciUQ/qGlGEcTolICg0ygtdg+j5WTZ+SRKx8J0L/YfVC7MXiVwNa9Ah35hnU8nA==
@@ -184,26 +175,12 @@
   dependencies:
     "@rinkkasatiainen/cfb-functional" "^1.1.0"
 
-"@rinkkasatiainen/cfb-event-sourcing-inbox@^0.9.0":
-  version "0.9.3"
-  resolved "https://npm.pkg.github.com/download/@rinkkasatiainen/cfb-event-sourcing-inbox/0.9.3/56e0f646a0ac43d3e6a423ff22cd62cf741d4c62#56e0f646a0ac43d3e6a423ff22cd62cf741d4c62"
-  integrity sha512-AnlzwkAjy/ff8/zRTnL2SGS6zFLL+A0OuxWOgsSTCu9Sf2AAXXX3EKP921z4qzviYIrZbQGQWstQldnoxGdYlw==
-  dependencies:
-    "@rinkkasatiainen/cfb-functional" "^1.0.1"
-
 "@rinkkasatiainen/cfb-event-sourcing-inbox@^1.0.0":
   version "1.0.0"
   resolved "https://npm.pkg.github.com/download/@rinkkasatiainen/cfb-event-sourcing-inbox/1.0.0/9f169bb32594cb768b80d83a11577e7ac1ead625#9f169bb32594cb768b80d83a11577e7ac1ead625"
   integrity sha512-S3zmVFEMGKzrW9gRE6yVccB2kk7WI7Lkmk9wkmR/LYCBs3ausI8+Uoj8BRwbwJxQiReikBWR4VktBIg8h7hUeg==
   dependencies:
     "@rinkkasatiainen/cfb-functional" "^1.1.0"
-
-"@rinkkasatiainen/cfb-event-sourcing-relay@^0.9.0":
-  version "0.9.3"
-  resolved "https://npm.pkg.github.com/download/@rinkkasatiainen/cfb-event-sourcing-relay/0.9.3/f351755af4e09d4a072923a02428a4f521c88dcb#f351755af4e09d4a072923a02428a4f521c88dcb"
-  integrity sha512-P12fRCoHBnetGEL372njKYBchunrxmzi9Iw9FE/9k6XrNJUceXwRELY15NnxuP0VvSFWITh8+gHoAT+E5X3zLw==
-  dependencies:
-    "@rinkkasatiainen/cfb-functional" "^1.0.1"
 
 "@rinkkasatiainen/cfb-event-sourcing-relay@^1.0.0":
   version "1.0.0"
@@ -228,7 +205,7 @@
     "@rinkkasatiainen/cfb-event-sourcing-store-sql" "^1.0.0"
     "@rinkkasatiainen/cfb-functional" "^1.1.0"
 
-"@rinkkasatiainen/cfb-event-sourcing-store-sql@^0.9.0", "@rinkkasatiainen/cfb-event-sourcing-store-sql@^0.9.3":
+"@rinkkasatiainen/cfb-event-sourcing-store-sql@^0.9.3":
   version "0.9.3"
   resolved "https://npm.pkg.github.com/download/@rinkkasatiainen/cfb-event-sourcing-store-sql/0.9.3/f9835b2c06b8333aef2b1e43b0b8a3576d916da2#f9835b2c06b8333aef2b1e43b0b8a3576d916da2"
   integrity sha512-xtmxz+rATAa/MEgwH95ppsJxIk41FWhkYOZ5gUzUFUZ/EqGA8KC4REOzzAgHR4P3FVobc8cfD9ub35NlS0RXfw==
@@ -245,15 +222,6 @@
     "@rinkkasatiainen/cfb-event-sourcing-core" "^1.0.0"
     "@rinkkasatiainen/cfb-event-sourcing-tracking" "^1.0.0"
     "@rinkkasatiainen/cfb-functional" "^1.1.0"
-
-"@rinkkasatiainen/cfb-event-sourcing-testing@^0.9.0":
-  version "0.9.3"
-  resolved "https://npm.pkg.github.com/download/@rinkkasatiainen/cfb-event-sourcing-testing/0.9.3/6553f51d83111940ac06b5567707a2fcba17d30f#6553f51d83111940ac06b5567707a2fcba17d30f"
-  integrity sha512-U3AL8RL+Uaza++L2VJzyHRxjg461c336qY99HKHkpa1DAPKDlFYcaHrO/ZDntOngZI5uHZVLbFOJDprwmyWt6A==
-  dependencies:
-    "@rinkkasatiainen/cfb-event-sourcing-core" "^0.9.3"
-    "@rinkkasatiainen/cfb-event-sourcing-tracking" "^0.9.3"
-    "@rinkkasatiainen/cfb-functional" "^1.0.1"
 
 "@rinkkasatiainen/cfb-event-sourcing-testing@^1.0.0":
   version "1.0.0"
@@ -324,28 +292,12 @@
   dependencies:
     ws "^7.5.13"
 
-"@rinkkasatiainen/cfb-session-discovery-contracts@^0.9.6":
-  version "0.9.6"
-  resolved "https://npm.pkg.github.com/download/@rinkkasatiainen/cfb-session-discovery-contracts/0.9.6/c291057a9f5bd11846934ae9a61d0cdd5e19e9f5#c291057a9f5bd11846934ae9a61d0cdd5e19e9f5"
-  integrity sha512-Xx2ltqHkwJWlUN9PB+xazQMQ/L3/HgGf8UgFO+NiKG+/rrYJ8x1LeboAww6HQUNyAYyKsUp2Znfo8rLmWSZEMQ==
-  dependencies:
-    "@rinkkasatiainen/cfb-schema-matcher" "^1.0.0"
-
 "@rinkkasatiainen/cfb-session-discovery-contracts@^1.0.0":
   version "1.0.0"
   resolved "https://npm.pkg.github.com/download/@rinkkasatiainen/cfb-session-discovery-contracts/1.0.0/00700120531d63b8f2fff68c0b9458b71f2367cd#00700120531d63b8f2fff68c0b9458b71f2367cd"
   integrity sha512-z2KpR9F0m19u4KEgz9qA4UgQzNGgvbZ+nGb99rBc1g4RybQHZKWFg9BJ/kC8oCXBxocHrsULiE1zCRTeH82zOw==
   dependencies:
     "@rinkkasatiainen/cfb-schema-matcher" "^1.0.0"
-
-"@rinkkasatiainen/cfb-session-discovery-core@^0.9.6":
-  version "0.9.6"
-  resolved "https://npm.pkg.github.com/download/@rinkkasatiainen/cfb-session-discovery-core/0.9.6/7463f18745ee25f21028b6231bfd1b07839cef19#7463f18745ee25f21028b6231bfd1b07839cef19"
-  integrity sha512-jsRWzPgbBQQwtr1k9dTx/tXuTzpu92gEW6F4kgFruBfhM7dwKLHyO0ahuKhKtTH1owWvnEqQI94+wCcXUAunbA==
-  dependencies:
-    "@rinkkasatiainen/cfb-event-sourcing-core" "^0.9.0"
-    "@rinkkasatiainen/cfb-event-sourcing-inbox" "^0.9.0"
-    "@rinkkasatiainen/cfb-functional" "^1.0.1"
 
 "@rinkkasatiainen/cfb-session-discovery-core@^1.0.0":
   version "1.0.0"
@@ -355,20 +307,6 @@
     "@rinkkasatiainen/cfb-event-sourcing-core" "^1.0.0"
     "@rinkkasatiainen/cfb-event-sourcing-inbox" "^1.0.0"
     "@rinkkasatiainen/cfb-functional" "^1.1.0"
-
-"@rinkkasatiainen/cfb-session-discovery-node-js@^0.9.5":
-  version "0.9.6"
-  resolved "https://npm.pkg.github.com/download/@rinkkasatiainen/cfb-session-discovery-node-js/0.9.6/d54930dd6fce63d3e5d89ed3b43b527ccd4532e2#d54930dd6fce63d3e5d89ed3b43b527ccd4532e2"
-  integrity sha512-58zVhodMBk+i+6Fv8UFIPvbJlzeF2FDSYHb2t3FnTI4bhI7redO4RJRxgMRxa+0AzMDpEXrCAV9UJjKAkFP9Aw==
-  dependencies:
-    "@rinkkasatiainen/cfb-event-sourcing-bus-rabbitmq" "^0.9.0"
-    "@rinkkasatiainen/cfb-event-sourcing-core" "^0.9.0"
-    "@rinkkasatiainen/cfb-event-sourcing-testing" "^0.9.0"
-    "@rinkkasatiainen/cfb-functional" "^1.0.1"
-    "@rinkkasatiainen/cfb-server-shell" "^0.1.0"
-    "@rinkkasatiainen/cfb-session-discovery-contracts" "^0.9.6"
-    "@rinkkasatiainen/cfb-session-discovery-core" "^0.9.6"
-    pg "^8.13.0"
 
 "@rinkkasatiainen/cfb-session-discovery-node-js@^1.0.0":
   version "1.0.0"
@@ -396,14 +334,6 @@
   dependencies:
     "@rinkkasatiainen/cfb-schema-matcher" "^1.0.0"
 
-"@rinkkasatiainen/cfb-session-proposal-core@^0.9.5", "@rinkkasatiainen/cfb-session-proposal-core@^0.9.6":
-  version "0.9.6"
-  resolved "https://npm.pkg.github.com/download/@rinkkasatiainen/cfb-session-proposal-core/0.9.6/e9c1c9a23ddadd0f67f0a0ed7e56feea4de3f1e6#e9c1c9a23ddadd0f67f0a0ed7e56feea4de3f1e6"
-  integrity sha512-7ZeEgBZm4f7pVYrPasIBN7GLqWAZXsBgILoNdZREAQvbvgeIzmxdRGh29lInZw1NGvyya8i6GRFQDl1w94GHrw==
-  dependencies:
-    "@rinkkasatiainen/cfb-event-sourcing-core" "^0.9.0"
-    "@rinkkasatiainen/cfb-functional" "^1.0.1"
-
 "@rinkkasatiainen/cfb-session-proposal-core@^1.0.0":
   version "1.0.0"
   resolved "https://npm.pkg.github.com/download/@rinkkasatiainen/cfb-session-proposal-core/1.0.0/65776c509825b6c9d0bdb5801cdc305b621291bd#65776c509825b6c9d0bdb5801cdc305b621291bd"
@@ -411,23 +341,6 @@
   dependencies:
     "@rinkkasatiainen/cfb-event-sourcing-core" "^1.0.0"
     "@rinkkasatiainen/cfb-functional" "^1.1.0"
-
-"@rinkkasatiainen/cfb-session-proposal-node-js@^0.9.5":
-  version "0.9.6"
-  resolved "https://npm.pkg.github.com/download/@rinkkasatiainen/cfb-session-proposal-node-js/0.9.6/364defce4aac8676633b22a9ad3e48f7fd818bbc#364defce4aac8676633b22a9ad3e48f7fd818bbc"
-  integrity sha512-FegcjvEx2+yTCtLQfDq2Sfdz9iiEhQxLbkAfE1t9TG4vF/eaM6jiXPCds4rvwJUzCpCTnt0wPvkEl3KfvPmvrg==
-  dependencies:
-    "@electric-sql/pglite" "0.5.13"
-    "@rinkkasatiainen/cfb-event-sourcing-bus-rabbitmq" "^0.9.0"
-    "@rinkkasatiainen/cfb-event-sourcing-core" "^0.9.0"
-    "@rinkkasatiainen/cfb-event-sourcing-relay" "^0.9.0"
-    "@rinkkasatiainen/cfb-event-sourcing-store-postgres" "^0.9.0"
-    "@rinkkasatiainen/cfb-event-sourcing-store-sql" "^0.9.0"
-    "@rinkkasatiainen/cfb-event-sourcing-testing" "^0.9.0"
-    "@rinkkasatiainen/cfb-functional" "^1.0.1"
-    "@rinkkasatiainen/cfb-server-shell" "^0.1.0"
-    "@rinkkasatiainen/cfb-session-proposal-core" "^0.9.6"
-    pg "^8.13.0"
 
 "@rinkkasatiainen/cfb-session-proposal-node-js@^1.0.0":
   version "1.0.0"
@@ -458,14 +371,6 @@
   dependencies:
     "@rinkkasatiainen/cfb-schema-matcher" "^1.0.0"
 
-"@rinkkasatiainen/cfb-session-scheduling-core@^0.9.8":
-  version "0.9.8"
-  resolved "https://npm.pkg.github.com/download/@rinkkasatiainen/cfb-session-scheduling-core/0.9.8/59d5a0aacd819ec46344825e30bfd26980c86e60#59d5a0aacd819ec46344825e30bfd26980c86e60"
-  integrity sha512-2mXPBTvM6ZYlfV9ocuP6pI0yMYCfsxbCKpnhGcriNe6TQ0udpbRW5izttQNsjRfgcb5fD+mhITUrpXRPsZlK6w==
-  dependencies:
-    "@rinkkasatiainen/cfb-event-sourcing-core" "^0.9.0"
-    "@rinkkasatiainen/cfb-functional" "^1.0.1"
-
 "@rinkkasatiainen/cfb-session-scheduling-core@^1.0.0":
   version "1.0.0"
   resolved "https://npm.pkg.github.com/download/@rinkkasatiainen/cfb-session-scheduling-core/1.0.0/424d84babcc95a3b56c4982847896741291b6fed#424d84babcc95a3b56c4982847896741291b6fed"
@@ -473,23 +378,6 @@
   dependencies:
     "@rinkkasatiainen/cfb-event-sourcing-core" "^1.0.0"
     "@rinkkasatiainen/cfb-functional" "^1.1.0"
-
-"@rinkkasatiainen/cfb-session-scheduling-node-js@^0.9.6":
-  version "0.9.8"
-  resolved "https://npm.pkg.github.com/download/@rinkkasatiainen/cfb-session-scheduling-node-js/0.9.8/ce095361abd283d03ce67bcbe24212ad71441f4c#ce095361abd283d03ce67bcbe24212ad71441f4c"
-  integrity sha512-H4CrtRk9/PQyYYg8KHaM6ZhvkCTaY5+PzhOVk07HIK7ovA9L2csR6TQrKu7DeeR+yNQoqkAfpgdW6SpXcerrBg==
-  dependencies:
-    "@electric-sql/pglite" "0.5.13"
-    "@rinkkasatiainen/cfb-event-sourcing-bus-rabbitmq" "^0.9.0"
-    "@rinkkasatiainen/cfb-event-sourcing-core" "^0.9.0"
-    "@rinkkasatiainen/cfb-event-sourcing-relay" "^0.9.0"
-    "@rinkkasatiainen/cfb-event-sourcing-store-postgres" "^0.9.0"
-    "@rinkkasatiainen/cfb-event-sourcing-store-sql" "^0.9.0"
-    "@rinkkasatiainen/cfb-event-sourcing-testing" "^0.9.0"
-    "@rinkkasatiainen/cfb-functional" "^1.0.1"
-    "@rinkkasatiainen/cfb-server-shell" "^0.1.0"
-    "@rinkkasatiainen/cfb-session-scheduling-core" "^0.9.8"
-    pg "^8.13.0"
 
 "@rinkkasatiainen/cfb-session-scheduling-node-js@^1.0.0":
   version "1.0.0"

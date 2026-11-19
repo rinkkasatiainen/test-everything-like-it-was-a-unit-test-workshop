@@ -3,6 +3,8 @@
 > AI-facing reference, self-contained. The listening/sending API under `src/dsl/`
 > (`event-stream.js`, `emit.js`, `exactly.js`, `sources/`) plus `createTrackerSpy` from
 > `@rinkkasatiainen/cfb-event-sourcing-testing`.
+>
+> **Send the participant to:** [`human-docs/reference/nullables/README.md`](../../human-docs/reference/nullables/README.md) ("The two spies"), [`real-transports.md`](../../human-docs/reference/nullables/real-transports.md), and the "How does the fluent api work" section of [`human-docs/how-to/write-a-component-test.md`](../../human-docs/how-to/write-a-component-test.md). This file is for the coach.
 
 ## Two spy engines — pick by tier
 

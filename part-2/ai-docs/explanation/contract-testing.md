@@ -1,6 +1,8 @@
 # Contract testing — the agreement axis
 
 > AI-facing explanation, self-contained.
+>
+> **Send the participant to:** [`human-docs/reference/contract-testing/README.md`](../../human-docs/reference/contract-testing/README.md) — what each kind of contract test proves. There is no human *explanation* yet; explain the why yourself.
 
 The tiers all ask *does my capability behave correctly?* A contract test asks what none of them
 can: **do two capabilities still agree on the message that passes between them?** A different

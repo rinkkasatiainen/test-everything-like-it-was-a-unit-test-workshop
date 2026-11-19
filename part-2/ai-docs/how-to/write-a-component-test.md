@@ -2,6 +2,8 @@
 
 > AI-facing recipe, self-contained. One capability, enabled by hand over nullable ports, no Docker,
 > nothing running. Five shapes are worked here.
+>
+> **Send the participant to:** [`human-docs/how-to/write-a-component-test.md`](../../human-docs/how-to/write-a-component-test.md), and for each edge [`human-docs/reference/nullables/`](../../human-docs/reference/nullables/README.md). This file is for the coach.
 
 ## The shape every component test shares
 

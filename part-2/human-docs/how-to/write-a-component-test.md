@@ -7,11 +7,6 @@ and you working with the names from your context matters.
 This guide will explain you my take on _component test_, and the _how to setup component test in this context_. The
 latter part is there because you don't know the implementation details you might need in order to run tests.
 
-
-> Your on-ramp for the component tier. The **setup is given to you, ready to paste** — it's plumbing,
-> not the lesson. What you write is the **assertion**: the part that says what your capability should
-> actually do. If you get stuck, there's a "Stuck?" section at the bottom.
-
 ## What a component test is, in one breath
 
 A component test, in this context while using _my vocabulary_, is testing a "bigger whole" - a small part of a journey,

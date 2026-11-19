@@ -2,6 +2,8 @@
 
 > AI-facing explanation, self-contained. For the step-by-step, see
 > `../how-to/write-a-component-test.md`.
+>
+> **Send the participant to:** [`human-docs/how-to/write-a-component-test.md`](../../human-docs/how-to/write-a-component-test.md) ("What a component test is, in one breath"). This file is for the coach.
 
 A component test asks one question: *does my capability do the right thing?* To ask it honestly it
 must stop asking a second one — *is the message the right shape?* — which already has an owner, the

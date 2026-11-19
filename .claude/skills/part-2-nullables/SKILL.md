@@ -22,5 +22,8 @@ box first; this lesson is something that coach routes *into*, not out of.
 
 Once the box is drawn: **open `part-2/ai-docs/coach/nullables.md` and follow it** — start from the
 mocks and spies they already know, then *show* how a nullable gives the same observation with none
-of the wiring, then send the participant back to `part-2/ai-docs/coach/draw-the-box.md` to finish
-drawing their box. Do not write their test here.
+of the wiring, then return to `part-2/ai-docs/coach/draw-the-box.md` and finish drawing their box
+with them. Both coach files are for you; when the participant should read something, point them at
+`part-2/human-docs/` (e.g. `human-docs/explanation/nullables.md`), never at `ai-docs/`. This
+lesson teaches the distinction; the test is written back in the draw-the-box coach (by them, or
+with you if they ask).
