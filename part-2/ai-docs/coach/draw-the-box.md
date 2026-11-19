@@ -110,12 +110,41 @@ let them answer before you name anything.
 1. **Arrows in — what starts this?** An HTTP command? A fact off the bus? Is it a *command*
    (changes something) or a *query* (returns something)? → the incoming message, what the test
    *acts* with.
-2. **Arrows out — what crosses the edge outward?** An event published? A write another
-   capability reads? Command or query? → the outgoing message, what the test *asserts*.
-3. **Hidden — what is inside the box you will NOT assert directly?** The store, private
-   reactions, the mapping. Covered through the public edges, not poked at.
+2. **Arrows out — what crosses the edge outward?** A fact the capability appends to its store
+   (which another capability will later read off the bus)? A response? Command or query? → the
+   outgoing message, what the test *asserts*.
+3. **Hidden — what is inside the box you will NOT assert directly?** Private reactions, the
+   mapping, the relay. Covered through the public edges, not poked at.
 Keep tying it back: *"outgoing on your side is incoming on theirs"* is the whole reason you
 assert the fact at the edge and not the call that sent it.
+
+### ⛔ Hard rule: a component test asserts the store write, never the producer
+
+In this codebase **a capability never publishes**. It **appends** its fact to its own event store
+(the outbox), and a separate **relay** later reads the store and publishes to the bus. So in a
+component test the outgoing edge **is the store**:
+
+```js
+output = store.trackChanges()                 // in beforeEach, before the act
+await createTrackerSpy(fromStore(output))     // after the act
+  .matching(appendedType('session-proposed'))
+  .waitUntilFound(1)
+```
+
+- **Never** steer a component test towards `producer.trackChanges()`, `fromProducer(...)`,
+  `broker.published`, or "check it was published to the bus". The relay is not running in a
+  component test, and the nullable store keeps no state, so **nothing reaches the producer**. A
+  producer assertion there waits forever and goes red with nothing wrong in the code.
+- If the participant says "published", accept the word and move them to the store: *"Right, that's
+  the outgoing fact. Where does the capability actually put it? Who moves it to the bus?"* Let them
+  find the store and the relay.
+- "The fact reaches the bus" is a different claim, so it's a different box: a **component-integration**
+  weld (store + relay) or an **integration** test (real Rabbit, `fromRabbit`). Don't add it to a
+  component test.
+- The **only** producer a component test observes is a capability's **own delivery producer**, which
+  is not the outbox: materialize's `view-updated` announcement (`fromProducer(deliveryProducer…)`, Shape
+  D in `../how-to/write-a-component-test.md`). The live WebSocket push is observed on
+  `channel.trackChanges()` (Shape E). Anything else outgoing goes through `fromStore`.
 
 ## 3. Classify the box — which kind of test is this? (the hard part)
 
@@ -132,7 +161,7 @@ with them, one question at a time:
    (nullable edges, real Postgres/Rabbit, or a whole running host?).
 
 The question that trips everyone: **where does the box stop?** A component test stops at the
-capability's own write/publish; the moment the claim becomes "the fact reached the *real* bus / the
+capability's own **write to its store** (see the hard rule in §2); the moment the claim becomes "the fact reached the *real* bus / the
 next reaction / a browser", the box has grown past component. The classification table in that doc
 maps each claim to its tier.
 
@@ -157,6 +186,7 @@ nullables sub-lesson), and ask them to come back with a revised answer. Common o
 |---|---|---|
 | "I'll assert that `fill()`/`availableSlots()` was called" | testing an outgoing *query* (Part 1 Step 3 said don't) | the **nullables sub-lesson** (`part-2/ai-docs/coach/nullables.md`) — *you* run it with them; their reading is [`human-docs/explanation/nullables.md`](../../human-docs/explanation/nullables.md) and [`human-docs/reference/nullables/query-ports.md`](../../human-docs/reference/nullables/query-ports.md) |
 | "I'll mock the bus and expect `publish`" | a mock couples to *how*, not *what* | the **nullables sub-lesson** (`part-2/ai-docs/coach/nullables.md`) — *you* run it with them; their reading is [`human-docs/explanation/nullables.md`](../../human-docs/explanation/nullables.md) — "Why no mocks" |
+| "I'll check the producer / the bus got it" (`producer.trackChanges()`, `fromProducer`, `broker.published`) in a component test | the capability appends to its store; the relay publishes, and it isn't running here, so nothing ever reaches the producer | [`human-docs/how-to/write-a-component-test.md`](../../human-docs/how-to/write-a-component-test.md) — "Verifying that message is sent" (`fromStore(output)`), then [`human-docs/reference/nullables/event-store.md`](../../human-docs/reference/nullables/event-store.md). "It reaches the bus" belongs in an integration test |
 | "I'll read the row back from the store" | a nullable store keeps no state — assert the *write* | [`human-docs/how-to/write-a-component-test.md`](../../human-docs/how-to/write-a-component-test.md) — "Verifying that message is sent", then [`human-docs/reference/nullables/event-store.md`](../../human-docs/reference/nullables/event-store.md) |
 | "How do I know what the request/event looks like?" | the shape lives in the contract package, not guesswork | [`human-docs/how-to/write-a-component-test.md`](../../human-docs/how-to/write-a-component-test.md) — "Building a message."; then the builder's page under [`human-docs/reference/builders/`](../../human-docs/reference/builders/index.md) |
 | "I'll hand-build the event payload" | that forges evidence — use the contract builder | same section — build it from the provider's builder, never a literal ([`human-docs/reference/builders/`](../../human-docs/reference/builders/index.md) lists every builder and its shape) |
@@ -194,7 +224,8 @@ the top) and let *them* write the first `it`. Your discipline:
 - **Always read their test file.** Whenever they come back — stuck, red, or green — open the actual
   file before you say anything about it. Never diagnose from their description alone.
 - **When they return stuck, diagnose first.** Name which rule it's bumping into: did they open the
-  spy *before* acting? are they trying to read a row back from a stateless nullable instead of
+  spy *before* acting? in a component test, are they spying on the producer instead of the store
+  (`fromStore(output)`, the hard rule in §2)? are they trying to read a row back from a stateless nullable instead of
   asserting the write? did they hand-roll the message instead of using the contract builder? are
   they asserting *how* (publish was called) instead of *what* crossed the edge? is the
   `waitUntilFound` argument being read as a count rather than seconds? Point at the specific rule or

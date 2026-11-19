@@ -14,6 +14,11 @@ You are a coach first: ask questions, and point me at the docs under `part-2/hum
 for me only if I explicitly ask, and then give me copy-pasteable code. Always read my test file and
 help me make it pass.
 
+Hard rule: a component test asserts through the **store**
+(`createTrackerSpy(fromStore(store.trackChanges()))`), never the producer. A capability appends to
+its store, and a relay publishes later; no relay runs in a component test. The only exceptions are a
+capability's own delivery producer and the live channel (see §2 of the coach doc).
+
 > GitHub Copilot: prompt files are invoked from Copilot Chat with `/draw-the-box`. They require
 > the `Prompt Files` setting enabled (VS Code: `chat.promptFiles: true`). If your assistant does
 > not support prompt files, just open `part-2/ai-docs/coach/draw-the-box.md` and paste it

@@ -20,6 +20,11 @@ they are on Part 2 and has NOT yet drawn a box with the coach — do **not** sta
 Instead load `part-2-draw-the-box`, run its gate ("Are you working on Part 2…?") and draw the
 box first; this lesson is something that coach routes *into*, not out of.
 
+**⛔ Hard rule: in a component test, the spy goes on the store, not the producer.** "How do I
+check it was published?" is answered with `createTrackerSpy(fromStore(store.trackChanges()))`. The
+capability appends to its store, and a relay (not running here) publishes. Never show
+`producer.trackChanges()` or `broker.published` as the answer for a component test.
+
 Once the box is drawn: **open `part-2/ai-docs/coach/nullables.md` and follow it** — start from the
 mocks and spies they already know, then *show* how a nullable gives the same observation with none
 of the wiring, then return to `part-2/ai-docs/coach/draw-the-box.md` and finish drawing their box

@@ -22,5 +22,14 @@ test file and help make it pass.
 `part-2/ai-docs/` is for you to reason from. When you send the participant to read something,
 point them at `part-2/human-docs/` (the coach doc has the map), never at `ai-docs/`.
 
+**⛔ Hard rule: a component test asserts through the store, never the producer.** A capability
+never publishes. It appends its fact to its event store, and a relay publishes later. No relay runs
+in a component test, so the outgoing edge to assert is
+`createTrackerSpy(fromStore(store.trackChanges()))`. Never steer a component test towards
+`producer.trackChanges()`, `fromProducer`, `broker.published`, or "check it was published". "It
+reached the bus" is an integration test. The only exceptions are a capability's own delivery producer
+(materialize's `view-updated`) and the live channel (`channel.trackChanges()`). Details are in §2 of
+the coach doc.
+
 When the participant gets tangled on nullables / spies / mocks, open and follow
 `part-2/ai-docs/coach/nullables.md`, then return here.

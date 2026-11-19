@@ -14,7 +14,10 @@
 3. **Arrange** with a fact or command from the provider's **builder** (never hand-rolled — see
    `build-a-fact-from-a-contract.md`).
 4. **Act** by driving the one inbound seam (`consumer.simulate`, an HTTP `post`, or a `get`).
-5. **Assert** on the capability's own output (its write, publish, or response), read off a spy.
+5. **Assert** on the capability's own output: **its append to the store** (`fromStore(output)`), or
+   a response. Never the producer: a capability doesn't publish, the relay does, and no relay runs
+   here (see "Why the component tier stops at the write"). The only exceptions are Shape D's own
+   delivery producer and Shape E's live channel.
 
 No fixture, no mock, no "was publish called" — the test builds the ports itself (see
 `../reference/ports.md`). The matchers that read a write record live at the top of the file:

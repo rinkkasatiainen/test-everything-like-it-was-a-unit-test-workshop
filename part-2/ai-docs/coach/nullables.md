@@ -89,8 +89,17 @@ Only now name the three, as a one-liner they can keep:
 
 > "Test everything like a unit test" works because of the first two, and in spite of the third.
 
-The trackers they will actually use: `store.trackChanges()`, `producer.trackChanges()`,
-`channel.trackChanges()`, and the raw `broker.published` array. Output tracking even works on the
+**Which edge to put the spy on, in a component test: the store.** The opening question says
+"published" on purpose, because that's how people think about it. But a capability never publishes
+here: it appends to its store, and a relay publishes later. The relay isn't running in a component
+test, so a producer spy sees nothing. When you show the example, say: *"the fact you'd call
+'published' is the append, so that's what we read."* Never steer a component test towards
+`producer.trackChanges()` or `broker.published` (the hard rule in `draw-the-box.md` §2).
+
+The trackers, and where each belongs: `store.trackChanges()` (**the default outgoing edge of
+every component test**); `channel.trackChanges()` (the live WebSocket push, Shape E);
+`producer.trackChanges()` (only a capability's own *delivery* producer, Shape D's `view-updated`, or
+a component-integration weld where a relay runs); and the raw `broker.published` array (rarely). Output tracking even works on the
 *real* adapter — it is a seam you turn on at runtime, not a property of being nullable. Each has its
 own page for the participant: `human-docs/reference/nullables/event-store.md`, `producer.md`,
 `live-channel.md`, `in-memory-broker.md`.
