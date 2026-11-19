@@ -4,6 +4,6 @@
 public
 
 # Holds a GitHub read:packages token. Keep it local; commit .npmrc.example instead.
-.npmrc
+.npmrc--removed
 
 *.tgz
